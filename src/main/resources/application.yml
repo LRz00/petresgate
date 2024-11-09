@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: petresgate
+  datasource:
+    url: jdbc:postgresql://localhost:5432/petresgate
+    username: 
+    password: 
+  jpa:
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    defer-datasource-initialization: true
+server:
+  port: 8080
