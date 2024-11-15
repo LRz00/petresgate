@@ -15,13 +15,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import lombok.Builder;
 /**
  *
  * @author lara
@@ -33,6 +34,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Builder
 @Entity
 @Table(name="animal")
 public class Animal {
@@ -57,9 +59,8 @@ public class Animal {
     @JoinColumn(name="current_address_id", referencedColumnName="id")
     private Address currentAddress;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="animal_id")
-    private List<Address> addressHistory;
+    @OneToMany(mappedBy= "animal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addressHistory = new ArrayList<>();
     
     @ManyToOne
     @JoinColumn(name="app_user_id")
@@ -67,4 +68,9 @@ public class Animal {
     
     @OneToMany(mappedBy="animal", cascade = CascadeType.ALL)
     private List<Comment> comments;
+    
+    public void addAddresToHistory(Address address){
+        address.setAnimal(this);
+        this.addressHistory.add(address);
+    }
 }
