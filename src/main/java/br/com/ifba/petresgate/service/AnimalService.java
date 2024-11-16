@@ -20,6 +20,7 @@ import br.com.ifba.petresgate.domain.AppUser;
 public class AnimalService {
     private final AnimalRepository animalRepository;
     private final AppUserRepository userRepository;
+    private final MailService mailService;
     
     public void saveAnimal(RegisterFormDTO formInfo){
           AppUser user = userRepository.findByEmail(formInfo.getEmail())
@@ -44,5 +45,7 @@ public class AnimalService {
         //animal.addAddresToHistory(address);
 
         this.animalRepository.save(animal);
+        
+        this.mailService.sendAnimalRegisteredEmail(user, animal);
     }
 }
