@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import br.com.ifba.petresgate.repository.*;
 import br.com.ifba.petresgate.domain.DTOs.RegisterFormDTO;
 import br.com.ifba.petresgate.domain.AppUser;
+import br.com.ifba.petresgate.domain.DTOs.UpdateFormDTO;
+import java.util.UUID;
+
 /**
  *
  * @author lara
@@ -18,12 +21,13 @@ import br.com.ifba.petresgate.domain.AppUser;
 @Service
 @RequiredArgsConstructor
 public class AnimalService {
+
     private final AnimalRepository animalRepository;
     private final AppUserRepository userRepository;
     private final MailService mailService;
-    
-    public void saveAnimal(RegisterFormDTO formInfo){
-          AppUser user = userRepository.findByEmail(formInfo.getEmail())
+
+    public void saveAnimal(RegisterFormDTO formInfo) {
+        AppUser user = userRepository.findByEmail(formInfo.getEmail())
                 .orElseGet(() -> {
                     AppUser newUser = AppUser.builder()
                             .fullname(formInfo.getFullname())
@@ -32,20 +36,53 @@ public class AnimalService {
                             .build();
                     return userRepository.save(newUser);
                 });
-        
-        
+
         Address address = Address.builder().neighborhood(formInfo.getNeighborhood())
                 .referencePoint(formInfo.getReferencePoint()).street(formInfo.getStreet())
                 .build();
-        
+
         Animal animal = Animal.builder().breed(formInfo.getBreed()).color(formInfo.getColor())
                 .currentAddress(address).description(formInfo.getDescription())
                 .registeredBy(user).species(formInfo.getSpecies()).build();
-        
-        //animal.addAddresToHistory(address);
 
+        //animal.addAddresToHistory(address);
         this.animalRepository.save(animal);
-        
+
         this.mailService.sendAnimalRegisteredEmail(user, animal);
+    }
+
+    public Boolean canAnimalBeEdited(Long animalId, UUID userKey) {
+        AppUser user = this.userRepository.findByConfirmationKey(userKey).orElseThrow(()
+                -> new RuntimeException("Confirmation Key doesnt match a valid user"));
+
+        Animal animal = this.animalRepository.findById(animalId).orElseThrow(() -> new RuntimeException("Animal not found"));
+
+        if (animal.getRegisteredBy().getConfirmationKey().equals(user.getConfirmationKey())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void UpdateAnimal(Long animalId, UUID userKey, UpdateFormDTO updateForm) {
+        
+        Animal animal = this.animalRepository.findById(animalId).orElseThrow(() -> new RuntimeException("Animal not found"));
+
+        if (this.canAnimalBeEdited(animalId, userKey)) {
+            Address address = Address.builder()
+                    .neighborhood(updateForm.getNeighborhood() != null ? updateForm.getNeighborhood() : animal.getCurrentAddress().getNeighborhood())
+                    .referencePoint(updateForm.getReferencePoint() != null ? updateForm.getReferencePoint() : animal.getCurrentAddress().getReferencePoint())
+                    .street(updateForm.getStreet() != null ? updateForm.getStreet() : animal.getCurrentAddress().getStreet())
+                    .build();
+
+           
+
+            animal.setCurrentAddress(address);
+            //animal.addAddresToHistory(address);
+
+            this.animalRepository.save(animal);
+
+            this.mailService.sendAnimalEditedEmail(this.userRepository.findByConfirmationKey(userKey).get(), animal);
+        }
     }
 }

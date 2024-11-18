@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "b1f0bcd1-7df1-4588-b0d6-73c51fd01829",
+		"name": "Animal API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "22099274"
+	},
+	"item": [
+		{
+			"name": "Register Animal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullname\": \"Lara Croft\",\n    \"email\": \"lara@example.com\",\n    \"phoneNumber\": \"123456789\",\n    \"species\": \"dog\",\n    \"color\": \"brown\",\n    \"description\": \"Friendly dog found in the park\",\n    \"breed\": \"Labrador\",\n    \"street\": \"Main Street\",\n    \"neighborhood\": \"Downtown\",\n    \"referencePoint\": \"Near the big tree\"\n}"
+				},
+				"url": "http://localhost:8080/api/animals"
+			},
+			"response": []
+		},
+		{
+			"name": "Update animal location",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"street\": \"Rua das nova\",\n    \"neighborhood\": \"Jardim Primavera\",\n    \"referencePoint\": \"Próximo ao mercado central\"\n}"
+				},
+				"url": "http://localhost:8080/api/animals/3/3c54e66b-33fe-4bc5-b469-f234fb24f6b1/edit"
+			},
+			"response": []
+		},
+		{
+			"name": "Can user edit?",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8080/api/animals/1/3c54e66b-33fe-4bc5-b469-f234fb24f6b1"
+			},
+			"response": []
+		}
+	]
+}

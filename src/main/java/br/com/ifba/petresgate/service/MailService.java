@@ -66,12 +66,50 @@ public class MailService {
          try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(user.getEmail());
-            message.setSubject("Chevae de confirmação PetResgate!");
+            message.setSubject("Chave de confirmação PetResgate!");
             message.setText("Aqui esta sua chave de confirmação para editar os detalhes do animal que voce registrou: " +
                     user.getConfirmationKey().toString());
 
             mailSender.send(message);
 
+        } catch (Exception e) {
+            throw new RuntimeException("Error Sending Email");
+        }
+    }
+    
+    public void sendAnimalEditedEmail(AppUser user, Animal animal){
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(user.getEmail());
+            message.setSubject("Localização do animal editado com sucesso!");
+            
+            String text = String.format(
+                    """
+                Olá, %s!
+                
+                Agradecemos por manter as informações dos animais em nosso sistemas atualizadas. Informamos que as novas informações foram salvas com sucesso!
+                
+                Detalhes do animal registrado:
+                🐾 Espécie: %s
+                📍 Local: %s, %s
+                
+                Caso você precise atualizar as informações do animal novamente no futuro, utilize o seguinte código de confirmação:
+                🔑 %s
+                
+                Sua contribuição faz a diferença na vida de muitos animais. Continue ajudando!
+                
+                Atenciosamente,
+                Equipe PetResgate
+                """,
+                    user.getFullname(),
+                    animal.getSpecies(),
+                    animal.getCurrentAddress().getStreet(), animal.getCurrentAddress().getNeighborhood(),
+                    user.getConfirmationKey().toString()
+            );
+            
+            message.setText(text);
+
+            mailSender.send(message);
         } catch (Exception e) {
             throw new RuntimeException("Error Sending Email");
         }
