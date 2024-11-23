@@ -6,6 +6,7 @@ package br.com.ifba.petresgate.repository;
 
 import br.com.ifba.petresgate.domain.AppUser;
 import br.com.ifba.petresgate.domain.Comment;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long>{
-    
+    List<Comment> findByAnimalId(Long animalId);
 }

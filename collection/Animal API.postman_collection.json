@@ -62,6 +62,33 @@
 				"url": "http://localhost:8080/api/animals/1/3c54e66b-33fe-4bc5-b469-f234fb24f6b1"
 			},
 			"response": []
+		},
+		{
+			"name": "Add Comment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullname\": \"Lara rodrigues\",\n    \"content\": \"O animal ja foi adotado\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/animals/1/comments"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Comments by Animal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/animals/1/comments"
+			},
+			"response": []
 		}
 	]
 }
