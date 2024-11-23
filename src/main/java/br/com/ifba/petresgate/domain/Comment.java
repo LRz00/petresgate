@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import lombok.Builder;
 /**
  *
  * @author lara
@@ -30,6 +30,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 @Entity
 @Table(name="comment")
+@Builder
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
