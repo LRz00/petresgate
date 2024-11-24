@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.com.ifba.petresgate.web;
+import br.com.ifba.petresgate.domain.Animal;
 import br.com.ifba.petresgate.domain.DTOs.RegisterFormDTO;
 import br.com.ifba.petresgate.domain.DTOs.UpdateFormDTO;
 import br.com.ifba.petresgate.service.AnimalService;
@@ -12,6 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 /**
  *
@@ -40,4 +45,16 @@ public class AnimalController {
        this.animalService.UpdateAnimal(animalId, userKey, updateForm);
        return ResponseEntity.status(HttpStatus.OK).body("Animal updated Sucessfully");
     }
+    
+    @GetMapping
+    public ResponseEntity<Page<Animal>> getAllAnimals(@RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+             @RequestParam(value = "direction", defaultValue = "asc") String direction){
+        var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        
+         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "id"));
+        Page<Animal> animals = this.animalService.getAllAnimals(pageable);
+        
+        return ResponseEntity.ok(animals);
+    } 
 }
