@@ -13,6 +13,8 @@ import br.com.ifba.petresgate.domain.DTOs.RegisterFormDTO;
 import br.com.ifba.petresgate.domain.AppUser;
 import br.com.ifba.petresgate.domain.DTOs.UpdateFormDTO;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -84,5 +86,9 @@ public class AnimalService {
 
             this.mailService.sendAnimalEditedEmail(this.userRepository.findByConfirmationKey(userKey).get(), animal);
         }
+    }
+    
+    public Page<Animal> getAllAnimals(Pageable pageable){
+        return this.animalRepository.findAll(pageable);
     }
 }
