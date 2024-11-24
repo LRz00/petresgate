@@ -9,12 +9,13 @@ import br.com.ifba.petresgate.domain.Comment;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 /**
  *
  * @author lara
  */
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long>{
-    List<Comment> findByAnimalId(Long animalId);
+    Page<Comment> findByAnimalId(Long animalId, Pageable pageable);
 }

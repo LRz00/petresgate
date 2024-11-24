@@ -13,7 +13,8 @@ import br.com.ifba.petresgate.domain.DTOs.CommentDTO;
 import br.com.ifba.petresgate.repository.AnimalRepository;
 import br.com.ifba.petresgate.repository.CommentRepository;
 import java.time.LocalDateTime;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -39,7 +40,7 @@ public class CommentService {
         this.commentRepository.save(comment);
     }
     
-    public List<Comment> getCommentsByAimalId(Long animalId){
-        return this.commentRepository.findByAnimalId(animalId);
+    public Page<Comment> getCommentsByAimalId(Long animalId, Pageable pageable){
+        return this.commentRepository.findByAnimalId(animalId, pageable);
     }
 }

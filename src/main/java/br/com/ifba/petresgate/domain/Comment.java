@@ -4,6 +4,7 @@
  */
 package br.com.ifba.petresgate.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,5 +49,6 @@ public class Comment {
     
     @ManyToOne
     @JoinColumn(name="animal_id", nullable=false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Animal animal;
 }
