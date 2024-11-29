@@ -13,5 +13,4 @@ public class AddressDTO {
     private String street;
     private String neighborhood;
     private String referencePoint;
-    private Long animalId;
 }

@@ -34,7 +34,7 @@ public class CommentService {
         );
         
         Comment comment = Comment.builder().animal(animal).content( commentDto.getContent())
-                .fullname(commentDto.getFullname()).timeStamp(LocalDateTime.now())
+                .fullName(commentDto.getFullname()).timeStamp(LocalDateTime.now())
                 .build();
         
         this.commentRepository.save(comment);
