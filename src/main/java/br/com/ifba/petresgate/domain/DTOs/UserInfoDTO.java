@@ -9,21 +9,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * DTO for registering a user, animal, and address
- */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class RegisterFormDTO {
+public class UserInfoDTO {
     @NotNull
-    private AppUserDTO userInfo;
+    @NotBlank
+    private String fullName;
 
     @NotNull
-    private AnimalInfoDTO animalInfo;
+    @NotBlank
+    @Email
+    private String email;
 
     @NotNull
-    private AddressDTO addressInfo;
+    @NotBlank
+    private String phoneNumber;
 }

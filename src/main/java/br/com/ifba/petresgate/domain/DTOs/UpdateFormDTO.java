@@ -11,14 +11,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.UUID;
 
 
 /**
  *
  * @author lara
- * 
- * Youre only allowed to edit address information
+ *
+ * You're only allowed to edit address information
  * the actual details of the animal shouldn't change
  */
 @AllArgsConstructor
@@ -27,8 +26,24 @@ import java.util.UUID;
 @Setter
 @Builder
 public class UpdateFormDTO {
-    
-    private String street;
-    private String neighborhood;
-    private String referencePoint;
+
+    @NotNull(message = "Address details are required")
+    private AddressDTO addressInfo;
+
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @Builder
+    public static class AddressDTO {
+        @NotBlank(message = "Street is required")
+        private String street;
+
+        @NotBlank(message = "Neighborhood is required")
+        private String neighborhood;
+
+        @NotBlank(message = "Reference Point is required")
+        private String referencePoint;
+    }
 }
