@@ -38,8 +38,8 @@ public class Comment {
     @Column(nullable = false)
     private Long id;
     
-    @Column(nullable = false, name="fullname")
-    private String fullname;
+    @Column(nullable = false, name="full_name")
+    private String fullName;
     
     @Column(nullable = false, name="content")
     private String content;

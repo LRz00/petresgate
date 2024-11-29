@@ -11,7 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import java.util.Objects;
+
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -41,8 +41,8 @@ public class AppUser {
     @Column(nullable = false)
     private Long id;
     
-    @Column(name= "fullname", nullable= false)
-    private String fullname;
+    @Column(name= "full_name", nullable= false)
+    private String fullName;
     
     @Column(name="email")
     @Email(message="Please try a VALID E-mail address")
@@ -55,6 +55,4 @@ public class AppUser {
     @Column(unique = true, name="confirmation_key",nullable=false, updatable = false)
     private UUID confirmationKey;
 
-   
-    
 }

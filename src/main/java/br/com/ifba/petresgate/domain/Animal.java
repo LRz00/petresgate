@@ -4,6 +4,7 @@
  */
 package br.com.ifba.petresgate.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,6 +58,7 @@ public class Animal {
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="current_address_id", referencedColumnName="id")
+    @JsonManagedReference
     private Address currentAddress;
     
     @OneToMany(mappedBy= "animal", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -68,9 +70,5 @@ public class Animal {
     
     @OneToMany(mappedBy="animal", cascade = CascadeType.ALL)
     private List<Comment> comments;
-    
-    public void addAddresToHistory(Address address){
-        address.setAnimal(this);
-        this.addressHistory.add(address);
-    }
+
 }

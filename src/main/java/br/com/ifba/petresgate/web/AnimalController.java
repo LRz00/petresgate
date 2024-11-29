@@ -4,8 +4,10 @@
  */
 package br.com.ifba.petresgate.web;
 import br.com.ifba.petresgate.domain.Animal;
+import br.com.ifba.petresgate.domain.DTOs.AnimalResponseDTO;
 import br.com.ifba.petresgate.domain.DTOs.RegisterFormDTO;
 import br.com.ifba.petresgate.domain.DTOs.UpdateFormDTO;
+import br.com.ifba.petresgate.domain.mapper.AnimalMapper;
 import br.com.ifba.petresgate.service.AnimalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +44,7 @@ public class AnimalController {
     
     @PutMapping("{animalId}/{userKey}/edit")
     public ResponseEntity<String> updateAnimal(@PathVariable Long animalId, @PathVariable UUID userKey, @Valid @RequestBody UpdateFormDTO updateForm){
-       this.animalService.UpdateAnimal(animalId, userKey, updateForm);
+       this.animalService.updateAnimal(animalId, userKey, updateForm);
        return ResponseEntity.status(HttpStatus.OK).body("Animal updated Sucessfully");
     }
     
@@ -56,5 +58,13 @@ public class AnimalController {
         Page<Animal> animals = this.animalService.getAllAnimals(pageable);
         
         return ResponseEntity.ok(animals);
-    } 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AnimalResponseDTO> getAnimalById(@PathVariable Long id) {
+        Animal animal = animalService.getAnimalById(id);
+        AnimalResponseDTO response = AnimalMapper.toAnimalResponseDTO(animal);
+        return ResponseEntity.ok(response);
+    }
+
 }

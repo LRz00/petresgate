@@ -6,7 +6,6 @@ package br.com.ifba.petresgate.service;
 
 import br.com.ifba.petresgate.domain.Animal;
 import br.com.ifba.petresgate.domain.AppUser;
-import br.com.ifba.petresgate.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class MailService {
 
     private final JavaMailSender mailSender;
+
 
     public void sendAnimalRegisteredEmail(AppUser user, Animal animal) {
 
@@ -47,7 +47,7 @@ public class MailService {
                 Atenciosamente,
                 Equipe PetResgate
                 """,
-                    user.getFullname(),
+                    user.getFullName(),
                     animal.getSpecies(),
                     animal.getCurrentAddress().getStreet(),
                     user.getConfirmationKey().toString()
@@ -101,7 +101,7 @@ public class MailService {
                 Atenciosamente,
                 Equipe PetResgate
                 """,
-                    user.getFullname(),
+                    user.getFullName(),
                     animal.getSpecies(),
                     animal.getCurrentAddress().getStreet(), animal.getCurrentAddress().getNeighborhood(),
                     user.getConfirmationKey().toString()
