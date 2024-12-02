@@ -1,7 +1,5 @@
 package br.com.ifba.petresgate.domain.DTOs;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class AnimalInfoDTO {
+public class AnimalDTO {
     private Long id;
     private String species;
     private String color;

@@ -4,7 +4,6 @@
  */
 package br.com.ifba.petresgate.domain.DTOs;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,23 +26,9 @@ import lombok.Setter;
 @Builder
 public class UpdateFormDTO {
 
-    @NotNull(message = "Address details are required")
+    @NotNull
     private AddressDTO addressInfo;
 
+    private AnimalDTO animalInfo;
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    @Builder
-    public static class AddressDTO {
-        @NotBlank(message = "Street is required")
-        private String street;
-
-        @NotBlank(message = "Neighborhood is required")
-        private String neighborhood;
-
-        @NotBlank(message = "Reference Point is required")
-        private String referencePoint;
-    }
 }
