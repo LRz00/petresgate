@@ -10,7 +10,7 @@ public class CommentMapper {
 
     public static CommentDTO toCommentDTO(Comment comment) {
         return CommentDTO.builder()
-                .fullname(comment.getFullName())
+                .fullName(comment.getFullName())
                 .content(comment.getContent())
                 .build();
     }
