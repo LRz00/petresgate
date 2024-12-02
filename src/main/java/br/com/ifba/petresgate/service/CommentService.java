@@ -34,13 +34,13 @@ public class CommentService {
         );
         
         Comment comment = Comment.builder().animal(animal).content( commentDto.getContent())
-                .fullName(commentDto.getFullname()).timeStamp(LocalDateTime.now())
+                .fullName(commentDto.getFullName()).timeStamp(LocalDateTime.now())
                 .build();
         
         this.commentRepository.save(comment);
     }
     
-    public Page<Comment> getCommentsByAimalId(Long animalId, Pageable pageable){
+    public Page<Comment> getCommentsByAnimalId(Long animalId, Pageable pageable){
         return this.commentRepository.findByAnimalId(animalId, pageable);
     }
 }

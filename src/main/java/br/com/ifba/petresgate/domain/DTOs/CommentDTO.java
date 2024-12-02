@@ -25,7 +25,7 @@ import lombok.Setter;
 public class CommentDTO {
     @NotNull
     @NotBlank
-    private String fullname;
+    private String fullName;
     
     @NotNull
     @NotBlank

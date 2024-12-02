@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifba.petresgate.service.CommentService;
 import jakarta.validation.Valid;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +50,7 @@ public class CommentController {
         
          Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "id"));
         
-        Page<Comment> comments = this.commentService.getCommentsByAimalId(animalId, pageable);
+        Page<Comment> comments = this.commentService.getCommentsByAnimalId(animalId, pageable);
 
         return ResponseEntity.ok(comments);
     }
