@@ -27,6 +27,7 @@ import org.springframework.data.domain.Sort;
 @RestController
 @RequestMapping("/api/animals")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AnimalController {
 
     private final AnimalService animalService;
