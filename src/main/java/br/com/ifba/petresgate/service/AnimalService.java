@@ -15,7 +15,9 @@ import br.com.ifba.petresgate.repository.*;
 import br.com.ifba.petresgate.domain.DTOs.RegisterFormDTO;
 import br.com.ifba.petresgate.domain.AppUser;
 import br.com.ifba.petresgate.domain.DTOs.UpdateFormDTO;
-
+import br.com.ifba.petresgate.exception.AnimalInformationConflictException;
+import br.com.ifba.petresgate.exception.ObjectNotFoundException;
+import br.com.ifba.petresgate.exception.InvalidUserCredentialsException;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,9 +64,9 @@ public class AnimalService {
 
     public Boolean canAnimalBeEdited(Long animalId, UUID userKey) {
         AppUser user = this.userRepository.findByConfirmationKey(userKey).orElseThrow(()
-                -> new RuntimeException("Confirmation Key doesnt match a valid user"));
+                -> new InvalidUserCredentialsException("Confirmation Key doesnt match a valid user"));
 
-        Animal animal = this.animalRepository.findById(animalId).orElseThrow(() -> new RuntimeException("Animal not found"));
+        Animal animal = this.animalRepository.findById(animalId).orElseThrow(() -> new ObjectNotFoundException("Animal not found"));
 
         return animal.getRegisteredBy().getConfirmationKey().equals(user.getConfirmationKey());
     }
@@ -91,12 +93,12 @@ public class AnimalService {
 
     public Animal getAnimalById(Long animalId) {
         return animalRepository.findByIdWithAddressHistory(animalId)
-                .orElseThrow(() -> new RuntimeException("Animal not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Animal not found"));
     }
 
     private void sendAnimalEditedEmail(UUID userKey, Animal animal) {
         AppUser appUser = this.userRepository.findByConfirmationKey(userKey)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new InvalidUserCredentialsException("User not found"));
         this.mailService.sendAnimalEditedEmail(appUser, animal);
     }
     
@@ -107,7 +109,7 @@ public class AnimalService {
     public void validateAnimalUniqueness(String species, String color, String description) {
         animalRepository.findBySpeciesAndColorAndDescription(species, color, description)
                 .ifPresent(existingAnimal -> {
-                    throw new IllegalArgumentException("Animal already registered with the same characteristics.");
+                    throw new AnimalInformationConflictException("Animal already registered with the same characteristics.");
                 });
     }
 }
