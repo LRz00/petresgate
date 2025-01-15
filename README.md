@@ -1,9 +1,6 @@
 # PET RESGATE IRECE
 ## **TO-DO**:
-- Implementar tartamento de Exceção.
 - Modificar os retornos dos metodos do Service e Controller de Animais.
-- implementar histórico de endereços para Animais.
-
 
 ## **ROTAS**:
 - saveAnimal: *Post* /api/animals/
