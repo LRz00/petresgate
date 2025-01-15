@@ -6,6 +6,7 @@ package br.com.ifba.petresgate.service;
 
 import br.com.ifba.petresgate.domain.Animal;
 import br.com.ifba.petresgate.domain.AppUser;
+import br.com.ifba.petresgate.exception.EmailNotSentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -58,7 +59,7 @@ public class MailService {
             mailSender.send(message);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error Sending Email");
+            throw new EmailNotSentException("Error Sending Email");
         }
     }
     
@@ -73,7 +74,7 @@ public class MailService {
             mailSender.send(message);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error Sending Email");
+            throw new EmailNotSentException("Error Sending Email");
         }
     }
     
@@ -111,7 +112,7 @@ public class MailService {
 
             mailSender.send(message);
         } catch (Exception e) {
-            throw new RuntimeException("Error Sending Email");
+            throw new EmailNotSentException("Error Sending Email");
         }
     }
 }

@@ -6,6 +6,7 @@ package br.com.ifba.petresgate.service;
 
 import br.com.ifba.petresgate.domain.Animal;
 import br.com.ifba.petresgate.domain.Comment;
+import br.com.ifba.petresgate.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class CommentService {
 
     public void addComment(Long animalId, CommentDTO commentDto) {
         Animal animal = this.animalRepository.findById(animalId).orElseThrow(
-                () -> new RuntimeException("Animal not found")
+                () -> new ObjectNotFoundException("Animal not found")
         );
         
         Comment comment = Comment.builder().animal(animal).content( commentDto.getContent())
